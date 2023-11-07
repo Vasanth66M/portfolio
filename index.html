@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Portfolio</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="about">
+        <div class="intro-container">
+            <h1>About Me</h1>
+            <p>Hey! Hii Everyone!</p>
+        </div>
+    </section>
+    
+
+    <section id="portfolio">
+        <h1>Portfolio</h1>
+        <div class="gallery">
+            <img src="i1.webp" alt="Project 1">
+            <img src="i5.jpeg" alt="Project 2">
+            <!-- Add more project images as needed -->
+        </div>
+    </section>
+    <section id="contact">
+        <h1>Contact Me</h1>
+        <form id="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+    
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+    
+            <input type="submit" value="Send">
+        </form>
+        <div class="submitted">Form submitted successfully!</div>
+    </section>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const contactForm = document.getElementById("contact-form");
+            const submittedMessage = document.querySelector("#contact .submitted");
+
+            contactForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                if (validateForm()) {
+                    // Simulate a submission process (you can replace this with your actual form submission logic)
+                    setTimeout(function () {
+                        contactForm.reset();
+                        submittedMessage.style.display = "block";
+                        submittedMessage.classList.add("submitted");
+                    }, 1000);
+                }
+            });
+
+            function validateForm() {
+                let valid = true;
+
+                // Reset previous error messages
+                const errorMessages = document.querySelectorAll(".error-message");
+                errorMessages.forEach((msg) => {
+                    msg.remove();
+                });
+
+                const name = document.getElementById("name");
+                const email = document.getElementById("email");
+                const message = document.getElementById("message");
+
+                if (name.value.trim() === "") {
+                    showError(name, "Name is required");
+                    valid = false;
+                }
+
+                if (email.value.trim() === "") {
+                    showError(email, "Email is required");
+                    valid = false;
+                } else if (!isValidEmail(email.value)) {
+                    showError(email, "Please enter a valid email address");
+                    valid = false;
+                }
+
+                if (message.value.trim() === "") {
+                    showError(message, "Message is required");
+                    valid = false;
+                }
+
+                return valid;
+            }
+
+            function isValidEmail(email) {
+                const emailPattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+                return emailPattern.test(email);
+            }
+
+            function showError(input, message) {
+                const errorMessage = document.createElement("div");
+                errorMessage.className = "error-message";
+                errorMessage.textContent = message;
+                input.parentNode.appendChild(errorMessage);
+            }
+        });
+    </script>
+    
+</body>
+</html>
